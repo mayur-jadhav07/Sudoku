@@ -7,6 +7,7 @@ package com.mycompany.sudoku;
 import static java.awt.Color.WHITE;
 import static java.awt.Color.*;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,6 +45,162 @@ public class Sudoku_GUI extends javax.swing.JFrame {
        
         btn.setBackground(blue);
    
+    }
+    
+    private void resetGame(){
+        JButton predefinedBtns[] = {
+                    r1c4, r1c7, r1c8, r1c9,
+                    r2c1, r2c5, r2c7,r2c6, r2c9,
+                    r3c1, r3c3, r3c5, r3c8,
+                    r4c5, r4c6, r4c8,
+                    r5c2, r5c3, r5c7, r5c8,
+                    r6c2, r6c4, r6c5,
+                    r7c2, r7c5, r7c7, r7c9,
+                    r8c1, r8c4, r8c5, r8c9,
+                    r9c1, r9c2, r9c3, r9c6};
+        
+        JButton btns[][] ={
+            {r1c1, r1c2, r1c3, r1c4, r1c5, r1c6, r1c7, r1c8, r1c9},
+            {r2c1, r2c2, r2c3, r2c4, r2c5, r2c6, r2c7, r2c8, r2c9},
+            {r3c1, r3c2, r3c3, r3c4, r3c5, r3c6, r3c7, r3c8, r3c9},
+            {r4c1, r4c2, r4c3, r4c4, r4c5, r4c6, r4c7, r4c8, r4c9},
+            {r5c1, r5c2, r5c3, r5c4, r5c5, r5c6, r5c7, r5c8, r5c9},
+            {r6c1, r6c2, r6c3, r6c4, r6c5, r6c6, r6c7, r6c8, r6c9},
+            {r7c1, r7c2, r7c3, r7c4, r7c5, r7c6, r7c7, r7c8, r7c9},
+            {r8c1, r8c2, r8c3, r8c4, r8c5, r8c6, r8c7, r8c8, r8c9},
+            {r9c1, r9c2, r9c3, r9c4, r9c5, r9c6, r9c7, r9c8, r9c9},
+        };
+        
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                boolean flag = true;
+                
+                for(int k=0; k<predefinedBtns.length; k++){
+                    if(btns[i][j] == predefinedBtns[k]){
+                        flag = false;
+                    }
+                }
+                if(flag){
+                    btns[i][j].setText("");
+                    btns[i][j].setForeground(black);
+                    btns[i][j].setBackground(WHITE);
+                }
+            }
+        }
+    }
+    
+    private void solution(){
+        JButton predefinedBtns[] = {
+                    r1c4, r1c7, r1c8, r1c9,
+                    r2c1, r2c5, r2c7,r2c6, r2c9,
+                    r3c1, r3c3, r3c5, r3c8,
+                    r4c5, r4c6, r4c8,
+                    r5c2, r5c3, r5c7, r5c8,
+                    r6c2, r6c4, r6c5,
+                    r7c2, r7c5, r7c7, r7c9,
+                    r8c1, r8c4, r8c5, r8c9,
+                    r9c1, r9c2, r9c3, r9c6};
+        
+        JButton btns[][] ={
+            {r1c1, r1c2, r1c3, r1c4, r1c5, r1c6, r1c7, r1c8, r1c9},
+            {r2c1, r2c2, r2c3, r2c4, r2c5, r2c6, r2c7, r2c8, r2c9},
+            {r3c1, r3c2, r3c3, r3c4, r3c5, r3c6, r3c7, r3c8, r3c9},
+            {r4c1, r4c2, r4c3, r4c4, r4c5, r4c6, r4c7, r4c8, r4c9},
+            {r5c1, r5c2, r5c3, r5c4, r5c5, r5c6, r5c7, r5c8, r5c9},
+            {r6c1, r6c2, r6c3, r6c4, r6c5, r6c6, r6c7, r6c8, r6c9},
+            {r7c1, r7c2, r7c3, r7c4, r7c5, r7c6, r7c7, r7c8, r7c9},
+            {r8c1, r8c2, r8c3, r8c4, r8c5, r8c6, r8c7, r8c8, r8c9},
+            {r9c1, r9c2, r9c3, r9c4, r9c5, r9c6, r9c7, r9c8, r9c9},
+        };
+        
+        if(globalFlag){
+            globalFlag = false;
+            solutionBtn.setText("Hide Solution");
+            for(int i=0; i<9; i++){
+                for(int j=0; j<9; j++){
+                    boolean flag = true;
+                    for(int k=0; k< predefinedBtns.length; k++){
+                        if(btns[i][j] == predefinedBtns[k]){
+                            flag = false;
+                        }
+                    }
+                    if(flag){
+                        btns[i][j].setText(solvedBoard[i][j]);
+                        btns[i][j].setBackground(WHITE);
+                        btns[i][j].setForeground(black);
+                    }
+                }
+            }
+        }
+        else{
+            solutionBtn.setText("Solution");
+            globalFlag = true;
+            resetGame();
+        }
+    }
+    
+    private void checkMoves(){
+        JButton btns[][] ={
+            {r1c1, r1c2, r1c3, r1c4, r1c5, r1c6, r1c7, r1c8, r1c9},
+            {r2c1, r2c2, r2c3, r2c4, r2c5, r2c6, r2c7, r2c8, r2c9},
+            {r3c1, r3c2, r3c3, r3c4, r3c5, r3c6, r3c7, r3c8, r3c9},
+            {r4c1, r4c2, r4c3, r4c4, r4c5, r4c6, r4c7, r4c8, r4c9},
+            {r5c1, r5c2, r5c3, r5c4, r5c5, r5c6, r5c7, r5c8, r5c9},
+            {r6c1, r6c2, r6c3, r6c4, r6c5, r6c6, r6c7, r6c8, r6c9},
+            {r7c1, r7c2, r7c3, r7c4, r7c5, r7c6, r7c7, r7c8, r7c9},
+            {r8c1, r8c2, r8c3, r8c4, r8c5, r8c6, r8c7, r8c8, r8c9},
+            {r9c1, r9c2, r9c3, r9c4, r9c5, r9c6, r9c7, r9c8, r9c9},
+        };
+        
+        JButton predefinedBtns[] = {
+                    r1c4, r1c7, r1c8, r1c9,
+                    r2c1, r2c5, r2c7,r2c6, r2c9,
+                    r3c1, r3c3, r3c5, r3c8,
+                    r4c5, r4c6, r4c8,
+                    r5c2, r5c3, r5c7, r5c8,
+                    r6c2, r6c4, r6c5,
+                    r7c2, r7c5, r7c7, r7c9,
+                    r8c1, r8c4, r8c5, r8c9,
+                    r9c1, r9c2, r9c3, r9c6};
+        
+        if(globalFlag){
+            globalFlag = false;
+            checkMovesBtn.setText("Remove checks");
+            for(int i=0; i<9; i++){
+                for(int j=0; j<9; j++){
+                    boolean flag = true;
+                    for(int k=0; k< predefinedBtns.length; k++){
+                        if(btns[i][j] == predefinedBtns[k]){
+                            flag = false;
+                        }
+                    }
+                    
+                    if(btns[i][j].getText() != solvedBoard[i][j] && btns[i][j].getText() != "" && flag){
+                        btns[i][j].setBackground(red);
+                    }
+                    else if(btns[i][j].getText() != "" && flag){
+                        btns[i][j].setBackground(GREEN);
+                    }
+                }
+            }
+        }
+        else{
+            checkMovesBtn.setText("Check Moves");
+            for(int i=0; i<9; i++){
+                for(int j=0; j<9; j++){
+                    boolean flag = true;
+                    for(int k=0; k< predefinedBtns.length; k++){
+                        if(btns[i][j] == predefinedBtns[k] && btns[i][j].getText() != ""){
+                            flag = false;
+                        }
+                    }
+                    if(flag && btns[i][j].getText() != ""){
+                        btns[i][j].setBackground(WHITE);
+                    }
+                }
+            }
+            globalFlag = true;
+        }
     }
     /**
      * Creates new form Sudoku_GUI
@@ -140,7 +297,7 @@ public class Sudoku_GUI extends javax.swing.JFrame {
         r2c5 = new javax.swing.JButton();
         r2c6 = new javax.swing.JButton();
         r3c4 = new javax.swing.JButton();
-        jButton71 = new javax.swing.JButton();
+        r3c5 = new javax.swing.JButton();
         r3c6 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         r7c7 = new javax.swing.JButton();
@@ -167,7 +324,7 @@ public class Sudoku_GUI extends javax.swing.JFrame {
         checkMovesBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sudoku");
+        setTitle("Sudoku Puzzle");
         setBounds(new java.awt.Rectangle(0, 0, 460, 600));
         setPreferredSize(new java.awt.Dimension(40, 40));
         setSize(new java.awt.Dimension(460, 600));
@@ -1006,11 +1163,11 @@ public class Sudoku_GUI extends javax.swing.JFrame {
             }
         });
 
-        jButton71.setBackground(new java.awt.Color(153, 153, 255));
-        jButton71.setText("4");
-        jButton71.addActionListener(new java.awt.event.ActionListener() {
+        r3c5.setBackground(new java.awt.Color(153, 153, 255));
+        r3c5.setText("4");
+        r3c5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton71ActionPerformed(evt);
+                r3c5ActionPerformed(evt);
             }
         });
 
@@ -1042,7 +1199,7 @@ public class Sudoku_GUI extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(r3c4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton71, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(r3c5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(r3c6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1063,7 +1220,7 @@ public class Sudoku_GUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(r3c4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton71, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(r3c5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(r3c6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1264,15 +1421,35 @@ public class Sudoku_GUI extends javax.swing.JFrame {
 
         resetBtn.setBackground(new java.awt.Color(153, 255, 255));
         resetBtn.setText("RESET");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnActionPerformed(evt);
+            }
+        });
 
         exitBtn.setBackground(new java.awt.Color(255, 51, 51));
         exitBtn.setText("EXIT");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
 
         solutionBtn.setBackground(new java.awt.Color(255, 255, 51));
         solutionBtn.setText("SOLUTION");
+        solutionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                solutionBtnActionPerformed(evt);
+            }
+        });
 
         checkMovesBtn.setBackground(new java.awt.Color(102, 255, 102));
         checkMovesBtn.setText("CHECK MOVES");
+        checkMovesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkMovesBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1729,10 +1906,10 @@ public class Sudoku_GUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "This is alredy allocated", "Warning", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_r3c3ActionPerformed
 
-    private void jButton71ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton71ActionPerformed
+    private void r3c5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r3c5ActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this, "This is alredy allocated", "Warning", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jButton71ActionPerformed
+    }//GEN-LAST:event_r3c5ActionPerformed
 
     private void r3c8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r3c8ActionPerformed
         // TODO add your handling code here:
@@ -1880,6 +2057,34 @@ public class Sudoku_GUI extends javax.swing.JFrame {
         turn = "8";
     }//GEN-LAST:event_selectionBtn8ActionPerformed
 
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+        // TODO add your handling code here:
+        JFrame frame = new JFrame("Reset");
+        
+        if(JOptionPane.showConfirmDialog(frame, "Confirm you want to reset the game", "Sudoku Puzzle", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
+            resetGame();
+        }
+    }//GEN-LAST:event_resetBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        // TODO add your handling code here:
+        JFrame frame = new JFrame("Exit");
+        
+        if(JOptionPane.showConfirmDialog(frame, "Confirm you want to exit the game", "Sudoku Puzzle", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void solutionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solutionBtnActionPerformed
+        // TODO add your handling code here:
+        solution();
+    }//GEN-LAST:event_solutionBtnActionPerformed
+
+    private void checkMovesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMovesBtnActionPerformed
+        // TODO add your handling code here:
+        checkMoves();
+    }//GEN-LAST:event_checkMovesBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1918,7 +2123,6 @@ public class Sudoku_GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton checkMovesBtn;
     private javax.swing.JButton exitBtn;
-    private javax.swing.JButton jButton71;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1950,6 +2154,7 @@ public class Sudoku_GUI extends javax.swing.JFrame {
     private javax.swing.JButton r3c2;
     private javax.swing.JButton r3c3;
     private javax.swing.JButton r3c4;
+    private javax.swing.JButton r3c5;
     private javax.swing.JButton r3c6;
     private javax.swing.JButton r3c7;
     private javax.swing.JButton r3c8;
